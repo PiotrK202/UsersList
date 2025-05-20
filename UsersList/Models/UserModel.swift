@@ -18,3 +18,9 @@ struct User: Codable, Identifiable {
 struct UsersResponse: Codable {
     let data: [User]
 }
+
+struct CreateUserRequest: Codable {
+    let firstName: String
+    let lastName: String
+    let email: String
+}
