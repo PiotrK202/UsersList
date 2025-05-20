@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DataServiceProtocol {
-    func handelData<T: Decodable, Body: Encodable>(endpoint: Endpoint, responseType: T.Type, requestBody: Body?) async throws -> T
+    func handelData<T: Decodable>(endpoint: Endpoint, responseType: T.Type) async throws -> T
 }
 
 final class DataService: DataServiceProtocol {
@@ -24,8 +24,8 @@ final class DataService: DataServiceProtocol {
         self.session = session
     }
     
-    func handelData<T: Decodable, Body: Encodable>(endpoint: Endpoint, responseType: T.Type, requestBody: Body?) async throws -> T {
-        
+    func handelData<T: Decodable>(endpoint: Endpoint, responseType: T.Type) async throws -> T {
+
         session.configuration.timeoutIntervalForRequest = 10
         
         guard let url = URL(string: endpoint.path, relativeTo: baseURL) else {
@@ -35,10 +35,7 @@ final class DataService: DataServiceProtocol {
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
         request.setValue(apiKey, forHTTPHeaderField: apiHeaderKey)
-        
-        if let body = requestBody {
-            request.httpBody = try encoder.encode(body)
-        }
+        request.httpBody = endpoint.bodyEncoder()
         
         do {
             let (data, response) = try await session.data(for: request)
