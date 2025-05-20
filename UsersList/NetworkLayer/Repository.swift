@@ -9,8 +9,8 @@ import Foundation
 
 protocol RepositoryProtocol {
     func fetchUsers(page: Int) async throws -> [User]
-    func addUser(firstName: String, lastName: String, email: String) async throws
-    func updateUser(id: Int, name: String, job: String) async throws
+    func addUser(_ request: CreateUserRequest) async throws
+    func updateUser(id: Int, with request: UpdateUserRequest) async throws
     func deleteUser(id: Int) async throws
 }
 
@@ -27,17 +27,15 @@ final class Repository: RepositoryProtocol {
         return response.data
     }
     
-    func addUser(firstName: String, lastName: String, email: String) async throws {
-        let body = CreateUserRequest(firstName: firstName, lastName: lastName, email: email)
-        let _: EmptyResponse = try await dataService.handelData(endpoint: .createUser(body: body), responseType: EmptyResponse.self)
+    func addUser(_ request: CreateUserRequest) async throws {
+        _ = try await dataService.handelData(endpoint: .createUser(body: request), responseType: EmptyResponse.self)
     }
     
-    func updateUser(id: Int, name: String, job: String) async throws {
-        let body = UpdateUserRequest(name: name, job: job)
-        let _: EmptyResponse = try await dataService.handelData(endpoint: .updateUser(id: id, body: body), responseType: EmptyResponse.self)
+    func updateUser(id: Int, with request: UpdateUserRequest) async throws {
+        _ = try await dataService.handelData(endpoint: .updateUser(id: id, body: request), responseType: EmptyResponse.self)
     }
     
     func deleteUser(id: Int) async throws {
-        let _: EmptyResponse = try await dataService.handelData(endpoint: .deleteUser(id: id), responseType: EmptyResponse.self)
+        _ = try await dataService.handelData(endpoint: .deleteUser(id: id), responseType: EmptyResponse.self)
     }
 }
