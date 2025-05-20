@@ -9,8 +9,8 @@ import Foundation
 
 enum Endpoint {
     case getUsers(page: Int)
-    case createUser
-    case updateUser(id: Int)
+    case createUser(body: CreateUserRequest)
+    case updateUser(id: Int, body: UpdateUserRequest)
     case deleteUser(id: Int)
 
     var path: String {
@@ -19,7 +19,7 @@ enum Endpoint {
             return "users?page=\(page)"
         case .createUser:
             return "users"
-        case .updateUser(let id):
+        case .updateUser(let id,_):
             return "users/\(id)"
         case .deleteUser(let id):
             return "users/\(id)"
@@ -36,6 +36,17 @@ enum Endpoint {
             return .patch
         case .deleteUser:
             return .delete
+        }
+    }
+    
+    func bodyEncoder() -> Data? {
+        switch self {
+        case .createUser(let body):
+            return try? JSONEncoder().encode(body)
+        case.updateUser(_, let body):
+            return try? JSONEncoder().encode(body)
+        default:
+            return nil
         }
     }
 }
