@@ -8,6 +8,7 @@
 import Foundation
 
 protocol DataServiceProtocol {
+    @discardableResult
     func handelData<T: Decodable>(endpoint: Endpoint, responseType: T.Type) async throws -> T
 }
 
@@ -24,7 +25,6 @@ final class DataService: DataServiceProtocol {
         self.session = session
     }
     
-    @discardableResult
     func handelData<T: Decodable>(endpoint: Endpoint, responseType: T.Type) async throws -> T {
 
         session.configuration.timeoutIntervalForRequest = 10
