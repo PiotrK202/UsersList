@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: Models
 
-struct User: Decodable, Equatable {
+struct User: Codable, Equatable {
     let id: Int
     let email: String
     let firstName: String
@@ -23,12 +23,12 @@ struct User: Decodable, Equatable {
     }
 }
 
-struct Support: Decodable, Equatable {
+struct Support: Codable, Equatable {
     let url: String
     let text: String
 }
 
-struct UsersResponse: Decodable, Equatable {
+struct UsersResponse: Codable, Equatable {
     let page: Int
     let perPage: Int
     let total: Int
@@ -43,7 +43,7 @@ struct UsersResponse: Decodable, Equatable {
     }
 }
 
-struct CreateUserRequest: Encodable, Equatable {
+struct CreateUserRequest: Codable, Equatable {
     let firstName: String
     let lastName: String
     let email: String
@@ -55,22 +55,22 @@ struct CreateUserRequest: Encodable, Equatable {
     }
 }
 
-struct CreateUserResponse: Decodable, Equatable {
+struct CreateUserResponse: Codable, Equatable {
     let name: String
     let job: String?
     let id: String
     let createdAt: String
 }
 
-struct UpdateUserRequest: Encodable, Equatable {
+struct UpdateUserRequest: Codable, Equatable {
     let name: String
     let job: String
 }
 
-struct UpdateUserResponse: Decodable, Equatable {
+struct UpdateUserResponse: Codable, Equatable {
     let name: String
     let job: String
     let updatedAt: String
 }
 
-struct EmptyResponse: Decodable, Equatable {}
+struct EmptyResponse: Codable, Equatable {}
