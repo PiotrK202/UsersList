@@ -23,7 +23,7 @@ struct RepositoryMock: RepositoryProtocol {
         guard !error else {
             throw MockError.error
         }
-        return CreateUserResponse(name: body.firstName + " " + body.lastName, job: nil, id: "123", createdAt: "2025-05-21T10:00:00.000Z")
+        return CreateUserResponse(name: body.name, job: body.job, id: "id", createdAt: "2025-05-21T10:00:00.000Z")
     }
 
     func updateUser(id: Int, with body: UpdateUserRequest) async throws -> UpdateUserResponse {

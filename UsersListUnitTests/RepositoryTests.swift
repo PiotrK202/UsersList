@@ -32,17 +32,17 @@ struct RepositoryTests {
     }
 
     @Test func testAddUserSuccess() async throws {
-        let request = CreateUserRequest(firstName: "John", lastName: "Doe", email: "john@example.com")
+        let request = CreateUserRequest(name: "jon", job: "job")
         let response = try await repository.addUser(request)
-        #expect(response.name == "John Doe")
-        #expect(response.id == "123")
+        #expect(response.name == "jon")
+        #expect(response.id == "id")
     }
 
     @Test mutating func testAddUserFailure() async throws {
         
         repository.error = true
         
-        let request = CreateUserRequest(firstName: "John", lastName: "Doe", email: "john@example.com")
+        let request = CreateUserRequest(name: "jon", job: "job")
         do {
             _ = try await repository.addUser(request)
         } catch {

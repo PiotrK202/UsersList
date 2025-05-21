@@ -27,7 +27,7 @@ struct DataServiceTests {
     }
 
     @Test func testFetchDataWithExpectetionToSuccess() async throws {
-        let expected = CreateUserRequest(firstName: "name", lastName: "lastName", email: "email")
+        let expected = CreateUserRequest(name: "jon", job: "job")
         let jsonData = try JSONEncoder().encode(expected)
         let session = makeSession(data: jsonData, statusCode: 200)
         let dataService = DataService(session: session)
@@ -40,7 +40,7 @@ struct DataServiceTests {
 
     @Test
     func testFetchDataFailure() async throws {
-        let expected = CreateUserRequest(firstName: "name", lastName: "lastName", email: "email")
+        let expected = CreateUserRequest(name: "jon", job: "job")
         let jsonData = try JSONEncoder().encode(expected)
         let session = makeSession(data: jsonData, statusCode: 400)
         let dataService = DataService(session: session)
