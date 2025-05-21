@@ -44,20 +44,13 @@ struct UsersResponse: Codable, Equatable {
 }
 
 struct CreateUserRequest: Codable, Equatable {
-    let firstName: String
-    let lastName: String
-    let email: String
-
-    enum CodingKeys: String, CodingKey {
-        case firstName = "first_name"
-        case lastName = "last_name"
-        case email
-    }
+    let name: String
+    let job: String
 }
 
 struct CreateUserResponse: Codable, Equatable {
     let name: String
-    let job: String?
+    let job: String
     let id: String
     let createdAt: String
 }

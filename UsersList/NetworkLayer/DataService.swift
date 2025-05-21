@@ -15,8 +15,6 @@ protocol DataServiceProtocol {
 final class DataService: DataServiceProtocol {
     
     private let baseURL = URL(string: "https://reqres.in/api")!
-    private let apiKey = "reqres-free-v1"
-    private let apiHeaderKey = "x-api-key"
     private let session: URLSession
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
@@ -35,7 +33,6 @@ final class DataService: DataServiceProtocol {
         
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
-        request.setValue(apiKey, forHTTPHeaderField: apiHeaderKey)
         request.httpBody = endpoint.bodyEncoder()
         
         do {
