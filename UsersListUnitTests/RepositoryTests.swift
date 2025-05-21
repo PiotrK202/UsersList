@@ -10,24 +10,18 @@ import Testing
 @testable import UsersList
 
 struct RepositoryTests {
-    
     var repository = RepositoryMock()
 
     @Test func testFetchUsersSuccess() async throws {
-        
         let users = try await repository.fetchUsers(page: 1)
         #expect(users.count == 1)
         #expect(users[0].firstName == "John")
     }
 
     @Test mutating func testFetchUsersFailure() async throws {
-        
         repository.error = true
-        
-        do {
-            _ = try await repository.fetchUsers(page: 1)
-        } catch {
-            #expect(error is MockError)
+        await #expect(throws: MockError.self) {
+            try await repository.fetchUsers(page: 1)
         }
     }
 
@@ -39,14 +33,11 @@ struct RepositoryTests {
     }
 
     @Test mutating func testAddUserFailure() async throws {
-        
         repository.error = true
         
         let request = CreateUserRequest(name: "jon", job: "job")
-        do {
-            _ = try await repository.addUser(request)
-        } catch {
-            #expect(error is MockError)
+        await #expect(throws: MockError.self) {
+            try await repository.addUser(request)
         }
     }
 
@@ -56,32 +47,27 @@ struct RepositoryTests {
         #expect(response.name == "Jane")
         #expect(response.job == "Engineer")
     }
-
+    
     @Test mutating func testUpdateUserFailure() async throws {
-        
         repository.error = true
         
         let request = UpdateUserRequest(name: "Jane", job: "Engineer")
-        do {
-            _ = try await repository.updateUser(id: 1, with: request)
-        } catch {
-            #expect(error is MockError)
+        
+        await #expect(throws: MockError.self) {
+            try await repository.updateUser(id: 1, with: request)
         }
     }
-
+    
     @Test func testDeleteUserSuccess() async throws {
         try await repository.deleteUser(id: 1)
         #expect(true)
     }
 
     @Test mutating func testDeleteUserFailure() async throws {
-        
         repository.error = true
         
-        do {
+        await #expect(throws: MockError.self) {
             try await repository.deleteUser(id: 1)
-        } catch {
-            #expect(error is MockError)
         }
     }
 }
