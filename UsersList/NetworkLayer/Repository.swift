@@ -28,11 +28,11 @@ final class Repository: RepositoryProtocol {
     }
     
     func addUser(_ body: CreateUserRequest) async throws -> CreateUserResponse  {
-        try await dataService.handelData(endpoint: .createUser(body: body), responseType: CreateUserResponse.self)
+        return try await dataService.handelData(endpoint: .createUser(body: body), responseType: CreateUserResponse.self)
     }
     
     func updateUser(id: Int, with body: UpdateUserRequest) async throws -> UpdateUserResponse {
-        try await dataService.handelData(endpoint: .updateUser(id: id, body: body), responseType: UpdateUserResponse.self)
+        return try await dataService.handelData(endpoint: .updateUser(id: id, body: body), responseType: UpdateUserResponse.self)
     }
     
     func deleteUser(id: Int) async throws {
