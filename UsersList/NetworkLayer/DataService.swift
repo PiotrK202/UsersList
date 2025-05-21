@@ -8,6 +8,7 @@
 import Foundation
 
 protocol DataServiceProtocol {
+    @discardableResult
     func handelData<T: Decodable>(endpoint: Endpoint, responseType: T.Type) async throws -> T
 }
 
