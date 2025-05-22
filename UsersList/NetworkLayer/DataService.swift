@@ -14,7 +14,7 @@ protocol DataServiceProtocol {
 
 final class DataService: DataServiceProtocol {
     
-    private let baseURL = URL(string: "https://reqres.in/api")!
+    private let baseURL = URL(string: "https://reqres.in/api/")!
     private let session: URLSession
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
@@ -24,9 +24,6 @@ final class DataService: DataServiceProtocol {
     }
     
     func handelData<T: Decodable>(endpoint: Endpoint, responseType: T.Type) async throws -> T {
-
-        session.configuration.timeoutIntervalForRequest = 10
-        
         guard let url = URL(string: endpoint.path, relativeTo: baseURL) else {
             throw URLError(.badURL)
         }

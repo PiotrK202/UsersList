@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-final class ListViewModel {
+final class UsersListViewModel {
     private let repository: RepositoryProtocol
     private(set) var users = [User]()
     
