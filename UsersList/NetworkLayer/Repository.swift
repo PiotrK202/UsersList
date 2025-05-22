@@ -8,7 +8,7 @@
 import Foundation
 
 protocol RepositoryProtocol {
-    func fetchUsers(page: Int) async throws -> [User]
+    func fetchUsers(page: Int) async throws -> UsersResponse
     func addUser(_ body: CreateUserRequest) async throws -> CreateUserResponse
     func updateUser(id: Int, with body: UpdateUserRequest) async throws -> UpdateUserResponse
     func deleteUser(id: Int) async throws
@@ -22,9 +22,8 @@ final class Repository: RepositoryProtocol {
         self.dataService = dataService
     }
     
-    func fetchUsers(page: Int) async throws -> [User] {
-        let response: UsersResponse = try await dataService.handelData(endpoint: .getUsers(page: page), responseType: UsersResponse.self)
-        return response.data
+    func fetchUsers(page: Int) async throws -> UsersResponse {
+        return try await dataService.handelData(endpoint: .getUsers(page: page), responseType: UsersResponse.self)
     }
     
     func addUser(_ body: CreateUserRequest) async throws -> CreateUserResponse  {
