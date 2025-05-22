@@ -9,14 +9,15 @@ import Foundation
 @testable import UsersList
 
 struct RepositoryMock: RepositoryProtocol {
-    var error = false
 
-    func fetchUsers(page: Int) async throws -> [User] {
+    var error = false
+    
+    func fetchUsers(page: Int) async throws -> UsersResponse {
         guard !error else {
             throw MockError.error
         }
-        let user = [User(id: 1, email: "email", firstName: "John", lastName: "Doe", avatar: "avatar_url")]
-        return user
+        let user = [User(id: 1, email: "email", firstName: "name", lastName: "lastName", avatar: "avatar")]
+        return UsersResponse(page: 1, perPage: 1, total: 1, totalPages: 1, data: user)
     }
 
     func addUser(_ body: CreateUserRequest) async throws -> CreateUserResponse {
