@@ -13,16 +13,16 @@ struct RepositoryTests {
     var repository = RepositoryMock()
 
     @Test func testFetchUsersSuccess() async throws {
-        let users = try await repository.fetchUsers(page: 1)
-        #expect(users.count == 1)
-        #expect(users[0].firstName == "John")
+        let response = try await repository.fetchUsers(page: 1)
+        #expect(response.data.count == 1)
+        #expect(response.data[0].firstName == "name")
     }
 
     @Test mutating func testFetchUsersFailure() async throws {
         repository.error = true
-        await #expect(throws: MockError.self) {
+        await #expect(throws: MockError.self, performing: {
             try await repository.fetchUsers(page: 1)
-        }
+        })
     }
 
     @Test func testAddUserSuccess() async throws {
