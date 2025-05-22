@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct URLSessionHelper {
+    static let session = URLSession(configuration: .default)
+}
