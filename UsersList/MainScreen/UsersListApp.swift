@@ -11,7 +11,7 @@ import SwiftUI
 struct UsersListApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ListView(viewModel: ListViewModel(repository: Repository(dataService: DataService(session: URLSessionHelper.session))))
         }
     }
 }
