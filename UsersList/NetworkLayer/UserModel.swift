@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: Models
 
-struct User: Codable, Equatable {
+struct User: Codable, Equatable, Identifiable {
     let id: Int
     let email: String
     let firstName: String
@@ -23,21 +23,15 @@ struct User: Codable, Equatable {
     }
 }
 
-struct Support: Codable, Equatable {
-    let url: String
-    let text: String
-}
-
-struct UsersResponse: Codable, Equatable {
+struct UsersResponse: Codable {
     let page: Int
     let perPage: Int
     let total: Int
     let totalPages: Int
     let data: [User]
-    let support: Support
 
     enum CodingKeys: String, CodingKey {
-        case page, total, data, support
+        case page, total, data
         case perPage = "per_page"
         case totalPages = "total_pages"
     }
