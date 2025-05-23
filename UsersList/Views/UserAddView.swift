@@ -37,6 +37,14 @@ struct UserAddView: View {
                     }
                 }
             }
+            .toolbar(content: {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("X") {
+                        dismiss()
+                    }
+                    .buttonStyle(.plain)
+                }
+            })
             .alert(isPresented: $isShowingAlert) {
                 Alert(title: Text("Error"), message: Text("Adding user went wrong"), dismissButton: .cancel())
             }
