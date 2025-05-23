@@ -10,8 +10,8 @@ import SwiftUI
 struct UserAddView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable private var viewModel: UserAddViewModel
-    @State private var isShowingAlert = false
-    
+    @State private var showAlert = false
+
     init(viewModel: UserAddViewModel) {
         self.viewModel = viewModel
     }
@@ -32,7 +32,7 @@ struct UserAddView: View {
                             try await viewModel.creatUser()
                             dismiss()
                         } catch {
-                            isShowingAlert = true
+                            showAlert = true
                         }
                     }
                 }
@@ -45,7 +45,7 @@ struct UserAddView: View {
                     .buttonStyle(.plain)
                 }
             })
-            .alert(isPresented: $isShowingAlert) {
+            .alert(isPresented: $showAlert) {
                 Alert(title: Text("Error"), message: Text("Adding user went wrong"), dismissButton: .cancel())
             }
         }
