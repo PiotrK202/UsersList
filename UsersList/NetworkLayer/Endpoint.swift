@@ -5,8 +5,9 @@
 //  Created by piotr koscielny on 20/5/25.
 //
 
-import Foundation
 
+
+import Foundation
 
 enum Endpoint {
     case getUsers(page: Int)
