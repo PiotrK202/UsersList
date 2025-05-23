@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 enum Endpoint {
     case getUsers(page: Int)
     case createUser(body: CreateUserRequest)
