@@ -23,18 +23,18 @@ final class Repository: RepositoryProtocol {
     }
     
     func fetchUsers(page: Int) async throws -> UsersResponse {
-        return try await dataService.handelData(endpoint: .getUsers(page: page), responseType: UsersResponse.self)
+        return try await dataService.handelData(endpoint: .getUsers(page: page))
     }
     
     func addUser(_ body: CreateUserRequest) async throws -> CreateUserResponse  {
-        return try await dataService.handelData(endpoint: .createUser(body: body), responseType: CreateUserResponse.self)
+        return try await dataService.handelData(endpoint: .createUser(body: body))
     }
     
     func updateUser(id: Int, with body: UpdateUserRequest) async throws -> UpdateUserResponse {
-        return try await dataService.handelData(endpoint: .updateUser(id: id, body: body), responseType: UpdateUserResponse.self)
+        return try await dataService.handelData(endpoint: .updateUser(id: id, body: body))
     }
     
     func deleteUser(id: Int) async throws {
-        try await dataService.handelData(endpoint: .deleteUser(id: id), responseType: EmptyResponse.self)
+        try await dataService.handelData(endpoint: .deleteUser(id: id))
     }
 }

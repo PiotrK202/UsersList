@@ -31,10 +31,8 @@ struct DataServiceTests {
         let jsonData = try JSONEncoder().encode(expected)
         let session = makeSession(data: jsonData, statusCode: 200)
         let dataService = DataService(session: session)
-        
         let endpoint = Endpoint.createUser(body: expected)
-        
-        let result: CreateUserRequest = try await dataService.handelData(endpoint: endpoint, responseType: CreateUserRequest.self)
+        let result: CreateUserRequest = try await dataService.handelData(endpoint: endpoint)
         #expect(result == expected)
     }
 
@@ -47,7 +45,31 @@ struct DataServiceTests {
         let endpoint = Endpoint.createUser(body: expected)
         
         do {
-            let _: CreateUserRequest = try await dataService.handelData(endpoint: endpoint, responseType: CreateUserRequest.self)
+            try await dataService.handelData(endpoint: endpoint)
+        } catch let error as URLError {
+            #expect(error.code == .badServerResponse)
+        }
+    }
+    
+    @Test func testFetchDataWithourReturnTypeSucces() async throws {
+        let user = User(id: 1, email: "q", firstName: "q", lastName: "q", avatar: "q")
+        let jsonData = try JSONEncoder().encode(user)
+        let session = makeSession(data: jsonData, statusCode: 204)
+        let dataService = DataService(session: session)
+        let endpoint = Endpoint.deleteUser(id: 1)
+        try await dataService.handelData(endpoint: endpoint)
+        #expect(true)
+    }
+    
+    @Test func testFetchDataWithourReturnTypeFailure() async throws {
+        let user = User(id: 1, email: "q", firstName: "q", lastName: "q", avatar: "q")
+        let jsonData = try JSONEncoder().encode(user)
+        let session = makeSession(data: jsonData, statusCode: 400)
+        let dataService = DataService(session: session)
+        let endpoint = Endpoint.deleteUser(id: 1)
+        
+        do {
+            try await dataService.handelData(endpoint: endpoint)
         } catch let error as URLError {
             #expect(error.code == .badServerResponse)
         }

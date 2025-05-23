@@ -11,6 +11,7 @@ struct UsersListView: View {
     @State private var viewModel: UsersListViewModel
     @State private var isShowingSheet = false
     @State private var isShowingAlert = false
+    private let indexSet: IndexSet = [1,2]
     
     init(viewModel: UsersListViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -43,18 +44,10 @@ struct UsersListView: View {
                             Text("\(user.firstName) \(user.lastName)")
                                 .font(.body)
                         }
+                        
                     }
                 }
-                .onDelete { indexSet in
-                    Task {
-                        do {
-                            try await viewModel.deleteUser(at: indexSet)
-                        } catch {
-                            print(error.localizedDescription)
-                            isShowingAlert = true
-                        }
-                    }
-                }
+                .onDelete(perform: deleteUser)
             }
             .navigationTitle("Users")
             .toolbar {
@@ -80,6 +73,17 @@ struct UsersListView: View {
             }
             .alert(isPresented: $isShowingAlert) {
                 Alert(title: Text("error"), message: Text("somoething went wrong"), dismissButton: .cancel())
+            }
+        }
+    }
+    
+    private func deleteUser(indexSet: IndexSet) {
+        Task {
+            do {
+                try await viewModel.deleteUser(at: indexSet)
+            } catch {
+                print(error.localizedDescription)
+                isShowingAlert = true
             }
         }
     }

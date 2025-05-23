@@ -8,44 +8,49 @@
 import Foundation
 
 protocol DataServiceProtocol {
-    @discardableResult
-    func handelData<T: Decodable>(endpoint: Endpoint, responseType: T.Type) async throws -> T
+    func handelData(endpoint: Endpoint) async throws
+    func handelData<T: Decodable>(endpoint: Endpoint) async throws -> T
 }
 
 final class DataService: DataServiceProtocol {
     
-    private let baseURL = URL(string: "https://reqres.in/api/")!
+    private let baseURL = "https://reqres.in/api"
     private let session: URLSession
     private let decoder = JSONDecoder()
-    private let encoder = JSONEncoder()
     
     init(session: URLSession) {
         self.session = session
     }
     
-    func handelData<T: Decodable>(endpoint: Endpoint, responseType: T.Type) async throws -> T {
-        guard let url = URL(string: endpoint.path, relativeTo: baseURL) else {
+    func handelData(endpoint: Endpoint) async throws {
+        try await apiCall(endpoint: endpoint)
+    }
+    
+    func handelData<T: Decodable>(endpoint: Endpoint) async throws -> T {
+        let data = try await apiCall(endpoint: endpoint)
+        return try decoder.decode(T.self, from: data)
+    }
+    
+    @discardableResult
+    private func apiCall(endpoint: Endpoint) async throws -> Data {
+        guard let url = URL(string: "\(baseURL)\(endpoint.path)") else {
             throw URLError(.badURL)
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
         request.httpBody = endpoint.bodyEncoder()
+        request.addValue("reqres-free-v1", forHTTPHeaderField: "x-api-key")
         
-        do {
-            let (data, response) = try await session.data(for: request)
-            try httpResponse(response: response)
-            return try decoder.decode(T.self, from: data)
-        } catch {
-            throw error
-        }
-    }
-    
-    private func httpResponse(response: URLResponse) throws {
+        let (data, response) = try await session.data(for: request)
+        
         guard let httpResponse = response as? HTTPURLResponse,
               (200..<300).contains(httpResponse.statusCode) else {
             throw URLError(.badServerResponse)
         }
+        
+        return data
+        
     }
 }
 

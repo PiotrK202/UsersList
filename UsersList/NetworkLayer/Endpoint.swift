@@ -16,13 +16,13 @@ enum Endpoint {
     var path: String {
         switch self {
         case .getUsers(let page):
-            return "users?page=\(page)"
+            return "/users?page=\(page)"
         case .createUser:
-            return "users"
+            return "/users"
         case .updateUser(let id,_):
-            return "users/\(id)"
+            return "/users/\(id)"
         case .deleteUser(let id):
-            return "users/\(id)"
+            return "/users/\(id)"
         }
     }
 
