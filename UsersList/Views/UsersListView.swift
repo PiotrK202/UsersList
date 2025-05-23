@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct UsersListView: View {
-    @State private var viewModel: UsersListViewModel
+    @Bindable private var viewModel: UsersListViewModel
     @State private var isShowingSheet = false
     @State private var isShowingAlert = false
-    private let indexSet: IndexSet = [1,2]
-    
+  
     init(viewModel: UsersListViewModel) {
-        _viewModel = State(initialValue: viewModel)
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -49,6 +48,12 @@ struct UsersListView: View {
                 }
                 .onDelete(perform: deleteUser)
             }
+            .refreshable {
+                fetchUsers()
+            }
+            .onAppear {
+                fetchUsers()
+            }
             .navigationTitle("Users")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -61,18 +66,22 @@ struct UsersListView: View {
                 }
             }
             .sheet(isPresented: $isShowingSheet) {
-                UserAddView()
+                UserAddView(viewModel: UserAddViewModel(repository: Repository(dataService: DataService(session: URLSessionHelper.session))))
             }
-            .task {
-                do {
-                    try await viewModel.fetchUsers()
-                } catch {
-                    print(error.localizedDescription)
-                    isShowingAlert = true
-                }
-            }
+
             .alert(isPresented: $isShowingAlert) {
                 Alert(title: Text("error"), message: Text("somoething went wrong"), dismissButton: .cancel())
+            }
+        }
+    }
+    
+    private func fetchUsers() {
+        Task {
+            do {
+                try await viewModel.fetchUsers()
+            } catch {
+                print(error.localizedDescription)
+                isShowingAlert = true
             }
         }
     }
