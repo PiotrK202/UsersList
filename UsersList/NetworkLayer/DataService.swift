@@ -41,6 +41,7 @@ final class DataService: DataServiceProtocol {
         request.httpMethod = endpoint.method.rawValue
         request.httpBody = endpoint.bodyEncoder()
         request.addValue("reqres-free-v1", forHTTPHeaderField: "x-api-key")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let (data, response) = try await session.data(for: request)
         
