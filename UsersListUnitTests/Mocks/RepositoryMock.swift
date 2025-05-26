@@ -9,7 +9,7 @@ import Foundation
 @testable import UsersList
 
 struct RepositoryMock: RepositoryProtocol {
-
+    var testUser = User(id: 1, email: "email", firstName: "name", lastName: "lastName", avatar: "avatar")
     var error = false
     
     func fetchUsers(page: Int) async throws -> UsersResponse {
