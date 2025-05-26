@@ -6,34 +6,65 @@
 //
 
 import XCTest
+@testable import UsersList
 
+@MainActor
 final class UsersListUITests: XCTestCase {
-
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    
+    override func tearDownWithError() throws { }
+    
+    func testUserFlow() throws {
         let app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        app.launchArguments.append("--uitest")
+        
+        let usersList = app.collectionViews.firstMatch
+        XCTAssertTrue(usersList.waitForExistence(timeout: 3))
+        
+        let firstUser =  usersList.cells.element(boundBy: 0)
+        XCTAssertTrue(firstUser.exists)
+        firstUser.tap()
+        
+        let detailView = app.scrollViews["userDetailView"]
+        XCTAssertTrue(detailView.waitForExistence(timeout: 2))
+        
+        let nameField = app.textFields["nameTextField"]
+        let jobField = app.textFields["jobTextField"]
+        let updatedButton = app.buttons["updateUserButton"]
+        
+        nameField.tap()
+        nameField.typeText("new name")
+        
+        jobField.tap()
+        jobField.typeText("new job")
+        
+        updatedButton.tap()
+        
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        
+        app.navigationBars.buttons["Add"].tap()
+        
+        let addView = app.otherElements["userAddView"]
+        XCTAssertTrue(addView.waitForExistence(timeout: 2))
+        
+        let newNameField = app.textFields["addUserName"]
+        let newJobField = app.textFields["addUserJob"]
+        let creatButton = app.buttons["createUserButton"]
+        
+        newNameField.tap()
+        newNameField.typeText("new user")
+        
+        newJobField.tap()
+        newJobField.typeText("new job")
+        
+        creatButton.tap()
+        XCTAssertTrue(usersList.waitForExistence(timeout: 2))
     }
-
-    @MainActor
+    
     func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
         }
