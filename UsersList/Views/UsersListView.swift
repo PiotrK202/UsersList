@@ -21,7 +21,7 @@ struct UsersListView: View {
             List {
                 ForEach(viewModel.users) { user in
                     NavigationLink {
-                        UserDetailView()
+                        UserDetailView(viewModel: UserDetailViewModel(repository: Repository(dataService: DataService(session: URLSessionHelper.session)), user: user))
                     } label: {
                         HStack {
                             AsyncImage(url: URL(string: user.avatar)) { phase in
