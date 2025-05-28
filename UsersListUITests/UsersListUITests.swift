@@ -24,7 +24,7 @@ final class UsersListUITests: XCTestCase {
         let usersList = app.collectionViews.firstMatch
         XCTAssertTrue(usersList.waitForExistence(timeout: 3))
         
-        let firstUser =  usersList.cells.element(boundBy: 0)
+        let firstUser = usersList.cells.element(boundBy: 0)
         XCTAssertTrue(firstUser.exists)
         firstUser.tap()
         

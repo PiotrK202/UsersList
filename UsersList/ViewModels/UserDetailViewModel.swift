@@ -32,6 +32,5 @@ final class UserDetailViewModel {
         } catch {
             throw error
         }
-      
     }
 }
