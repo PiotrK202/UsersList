@@ -29,6 +29,16 @@
 		DFF820992DDDB9030063A5C1 /* UsersListUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UsersListUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DF094FE92DE6FCFB0094F677 /* Exceptions for "UsersList" folder in "UsersListUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Helpers/AccessibilityIdentifierHelper.swift,
+			);
+			target = DF5138282DE45DFF00DFD934 /* UsersListUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DF51382A2DE45DFF00DFD934 /* UsersListUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -37,6 +47,9 @@
 		};
 		DF655C8F2DDB22D900076D32 /* UsersList */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DF094FE92DE6FCFB0094F677 /* Exceptions for "UsersList" folder in "UsersListUITests" target */,
+			);
 			path = UsersList;
 			sourceTree = "<group>";
 		};

@@ -43,13 +43,13 @@ struct UserDetailView: View {
                     .font(.subheadline)
                 
                 TextField("name", text: $localTextFieldName)
-                    .accessibilityIdentifier("nameTextField")
+                    .accessibilityIdentifier(AccessibilityIdentifiers.UserDetailView.userNameTextField)
                     .padding()
                     .foregroundStyle(.gray)
                     .textFieldStyle(.roundedBorder)
                 
                 TextField("job",text: $localTextFieldJob)
-                    .accessibilityIdentifier("jobTextField")
+                    .accessibilityIdentifier(AccessibilityIdentifiers.UserDetailView.userJobTextField)
                     .padding()
                     .foregroundStyle(.gray)
                     .textFieldStyle(.roundedBorder)
@@ -63,13 +63,13 @@ struct UserDetailView: View {
                         }
                     }
                 }
-                .accessibilityIdentifier("updateUserButton")
+                .accessibilityIdentifier(AccessibilityIdentifiers.UserDetailView.updateUserButton)
             }
             .navigationTitle("detail")
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Error"), message: Text("Something went wrong"), dismissButton: .cancel())
             }
         }
-        .accessibilityIdentifier("userDetailView")
+        .accessibilityIdentifier(AccessibilityIdentifiers.UserDetailView.userDetailView)
     }
 }

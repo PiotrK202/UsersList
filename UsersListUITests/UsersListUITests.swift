@@ -28,12 +28,12 @@ final class UsersListUITests: XCTestCase {
         XCTAssertTrue(firstUser.exists)
         firstUser.tap()
         
-        let detailView = app.scrollViews["userDetailView"]
+        let detailView = app.scrollViews[AccessibilityIdentifiers.UserDetailView.userDetailView]
         XCTAssertTrue(detailView.waitForExistence(timeout: 2))
         
-        let nameField = app.textFields["nameTextField"]
-        let jobField = app.textFields["jobTextField"]
-        let updatedButton = app.buttons["updateUserButton"]
+        let nameField = app.textFields[AccessibilityIdentifiers.UserDetailView.userNameTextField]
+        let jobField = app.textFields[AccessibilityIdentifiers.UserDetailView.userJobTextField]
+        let updatedButton = app.buttons[AccessibilityIdentifiers.UserDetailView.updateUserButton]
         
         nameField.tap()
         nameField.typeText("new name")
@@ -47,12 +47,12 @@ final class UsersListUITests: XCTestCase {
         
         app.navigationBars.buttons["Add"].tap()
         
-        let addView = app.otherElements["userAddView"]
+        let addView = app.otherElements[AccessibilityIdentifiers.UserAddView.addUserView]
         XCTAssertTrue(addView.waitForExistence(timeout: 2))
         
-        let newNameField = app.textFields["addUserName"]
-        let newJobField = app.textFields["addUserJob"]
-        let creatButton = app.buttons["createUserButton"]
+        let newNameField = app.textFields[AccessibilityIdentifiers.UserAddView.userNameTextField]
+        let newJobField = app.textFields[AccessibilityIdentifiers.UserAddView.userJobTextField]
+        let creatButton = app.buttons[AccessibilityIdentifiers.UserAddView.addUserButton]
         
         newNameField.tap()
         newNameField.typeText("new user")

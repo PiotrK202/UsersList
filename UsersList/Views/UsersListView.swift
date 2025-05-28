@@ -63,6 +63,7 @@ struct UsersListView: View {
                     Button("Add") {
                         isShowingSheet.toggle()
                     }
+                    .accessibilityIdentifier(AccessibilityIdentifiers.UsersListView.addNavigationBarButton)
                 }
             }
             .sheet(isPresented: $isShowingSheet) {
