@@ -17,6 +17,7 @@ struct UserDetailView: View {
         self.viewModel = viewModel
     }
     
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -24,16 +25,14 @@ struct UserDetailView: View {
                     if let image = phase.image {
                         image
                             .resizable()
-                            .frame(width: 100, height: 100)
                             .clipShape(Circle())
                     } else if phase.error != nil {
                         Color.clear
-                            .frame(width: 100, height: 100)
                     } else {
                         ProgressView()
-                            .frame(width: 100, height: 100)
                     }
-                }
+                }.frame(width: 150, height: 150)
+                
                 Text(viewModel.user.email)
                     .font(.subheadline)
                 

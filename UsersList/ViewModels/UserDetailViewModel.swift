@@ -26,7 +26,7 @@ final class UserDetailViewModel {
         let request = UpdateUserRequest(name: newName, job: newJob)
         
         do {
-            _ = try await repository.updateUser(id: user.id, with: request)
+            try await repository.updateUser(id: user.id, with: request)
             self.name = newName
             self.job = newJob
         } catch {
