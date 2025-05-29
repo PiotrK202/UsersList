@@ -10,7 +10,7 @@ import Foundation
 protocol RepositoryProtocol {
     func fetchUsers(page: Int) async throws -> UsersResponse
     func addUser(_ body: CreateUserRequest) async throws -> CreateUserResponse
-    func updateUser(id: Int, with body: UpdateUserRequest) async throws -> UpdateUserResponse
+   @discardableResult func updateUser(id: Int, with body: UpdateUserRequest) async throws -> UpdateUserResponse
     func deleteUser(id: Int) async throws
 }
 

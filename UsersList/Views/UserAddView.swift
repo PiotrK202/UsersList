@@ -21,9 +21,11 @@ struct UserAddView: View {
             Form {
                 Section("User Name") {
                     TextField("name", text: $viewModel.name)
+                        .accessibilityIdentifier(AccessibilityIdentifiers.UserAddView.userNameTextField)
                 }
                 Section("User Job") {
                     TextField("Job", text: $viewModel.job)
+                        .accessibilityIdentifier(AccessibilityIdentifiers.UserAddView.userJobTextField)
                 }
                 
                 Button("Add") {
@@ -36,7 +38,9 @@ struct UserAddView: View {
                         }
                     }
                 }
+                .accessibilityIdentifier(AccessibilityIdentifiers.UserAddView.addUserButton)
             }
+            
             .toolbar(content: {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("X") {
@@ -49,6 +53,7 @@ struct UserAddView: View {
                 Alert(title: Text("Error"), message: Text("Adding user went wrong"), dismissButton: .cancel())
             }
         }
+        .accessibilityIdentifier(AccessibilityIdentifiers.UserAddView.addUserView)
     }
 }
 
