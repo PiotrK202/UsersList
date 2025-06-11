@@ -1,0 +1,73 @@
+//
+//  RepositoryTests.swift
+//  UsersListUnitTests
+//
+//  Created by piotr koscielny on 21/5/25.
+//
+
+import Foundation
+import Testing
+@testable import UsersList
+
+struct RepositoryTests {
+    var repository = RepositoryMock()
+
+    @Test func testFetchUsersSuccess() async throws {
+        let response = try await repository.fetchUsers(page: 1)
+        #expect(response.data.count == 1)
+        #expect(response.data[0].firstName == "name")
+    }
+
+    @Test mutating func testFetchUsersFailure() async throws {
+        repository.error = true
+        await #expect(throws: MockError.self, performing: {
+            try await repository.fetchUsers(page: 1)
+        })
+    }
+
+    @Test func testAddUserSuccess() async throws {
+        let request = CreateUserRequest(name: "jon", job: "job")
+        let response = try await repository.addUser(request)
+        #expect(response.name == "jon")
+        #expect(response.id == "id")
+    }
+
+    @Test mutating func testAddUserFailure() async throws {
+        repository.error = true
+        
+        let request = CreateUserRequest(name: "jon", job: "job")
+        await #expect(throws: MockError.self) {
+            try await repository.addUser(request)
+        }
+    }
+
+    @Test func testUpdateUserSuccess() async throws {
+        let request = UpdateUserRequest(name: "Jane", job: "Engineer")
+        let response = try await repository.updateUser(id: 1, with: request)
+        #expect(response.name == "Jane")
+        #expect(response.job == "Engineer")
+    }
+    
+    @Test mutating func testUpdateUserFailure() async throws {
+        repository.error = true
+        
+        let request = UpdateUserRequest(name: "Jane", job: "Engineer")
+        
+        await #expect(throws: MockError.self) {
+            try await repository.updateUser(id: 1, with: request)
+        }
+    }
+    
+    @Test func testDeleteUserSuccess() async throws {
+        try await repository.deleteUser(id: 1)
+        #expect(true)
+    }
+
+    @Test mutating func testDeleteUserFailure() async throws {
+        repository.error = true
+        
+        await #expect(throws: MockError.self) {
+            try await repository.deleteUser(id: 1)
+        }
+    }
+}
